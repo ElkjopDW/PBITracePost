@@ -62,6 +62,7 @@ namespace TracePost
         static void Main(string[] args)
         {
 
+            IConfigurationSection conf = configuration.GetSection("PushDataset");
             workspaceName = configuration.GetSection("PushDataset:workspaceName").Value;
             pushDatasetName = configuration.GetSection("PushDataset:datasetName").Value;
             clearDataSetOnStart = bool.Parse(configuration.GetSection("PushDataset:clearDataSetOnStart").Value);
@@ -82,7 +83,8 @@ namespace TracePost
                     This should enable MFA popup
             **************************************************************************/
 
-            server.Connect(configuration.GetConnectionString("databaseToTrace"));
+            string connectionString = configuration.GetConnectionString("databaseToTrace");
+            server.Connect(connectionString);
             _sessionId = server.SessionID;
 
             /**************************************************************************
